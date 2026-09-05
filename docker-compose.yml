@@ -1,0 +1,7 @@
+services:
+  gate:
+    build: .
+    ports: ["8000:8000"]
+    environment:
+      UPSTREAM: "https://mainnet.base.org"
+      PAYTO: "0xe51e284b6Fbd870F43A2B112d40e48b34F8a7963"

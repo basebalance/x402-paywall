@@ -201,11 +201,15 @@ def build_handler(state: State, args: argparse.Namespace):
             self.wfile.write(body)
 
         def _session_key(self):
-            """Quota bucket identity: CDN-aware client IP (per-IP free tier,
-            matching live basebalance.cloud). Per-request random session keys were
-            a bug: every request opened a fresh free window so the paywall never
-            fired."""
-            return "ip:" + self._client_ip()
+        """Quota bucket: agents send x-session-id deliberately (curl/urllib/
+        requests never retain cookies by default, so cookie keys make the
+        paywall invisible to them). Prefer explicit header, else CDN-aware IP
+        (CF-Connecting-IP/X-Forwarded-For handle edge rotation)."""
+        sid = (self.headers.get("x-session-id") or "").strip()
+        if sid:
+            return "sess:" + sid
+        return "ip:" + self._client_ip()
+
         def do_GET(self):
             now = time.time()
             key = self._session_key()

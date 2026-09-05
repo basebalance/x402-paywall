@@ -171,6 +171,20 @@ def build_handler(state: State, args: argparse.Namespace):
     ttl = args.ttl
 
     class Handler(BaseHTTPRequestHandler):
+
+        def _client_ip(self):
+            """Quota identity: honor proxy/CDN headers (CF-Connecting-IP,
+            X-Forwarded-For) so deployments behind Cloudflare/nginx charge real
+            users, not the CDN's shared egress IP. Set QUOTA_TRUST_HEADERS=0
+            to force raw socket IP."""
+            if os.environ.get("QUOTA_TRUST_HEADERS", "1").lower() not in ("0", "false", "no"):
+                cf = self.headers.get("CF-Connecting-IP")
+                if cf:
+                    return cf.split(",")[0].strip()
+                xff = self.headers.get("X-Forwarded-For")
+                if xff:
+                    return xff.split(",")[0].strip()
+            return self.client_address[0]
         protocol_version = "HTTP/1.1"
 
         def log_message(self, *a):  # silence default
@@ -186,23 +200,12 @@ def build_handler(state: State, args: argparse.Namespace):
             self.end_headers()
             self.wfile.write(body)
 
-        def _session_key(self) -> str:
-            """Free-tier key = stable client session (cookie), NOT raw IP.
-
-            Behind a CDN the edge IP rotates, so per-IP buckets never exhaust
-            and the 402 never fires. A session cookie survives edge rotation;
-            cookie-less clients receive one on their first free request.
-            """
-            import re, secrets
-            m = re.search(r"(?:^|;)\s*x402sess=([0-9a-fA-F]{32})", self.headers.get("Cookie", "") or "")
-            if m:
-                return "sess:" + m.group(1).lower()
-            sid = getattr(self, "_new_sess", None)
-            if sid is None:
-                sid = secrets.token_hex(16)
-                self._new_sess = sid
-            return "sess:" + sid
-
+        def _session_key(self):
+            """Quota bucket identity: CDN-aware client IP (per-IP free tier,
+            matching live basebalance.cloud). Per-request random session keys were
+            a bug: every request opened a fresh free window so the paywall never
+            fired."""
+            return "ip:" + self._client_ip()
         def do_GET(self):
             now = time.time()
             key = self._session_key()

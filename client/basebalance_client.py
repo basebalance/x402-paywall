@@ -27,7 +27,7 @@ import urllib.error
 import urllib.request
 
 BASE_URL = os.environ.get("BASEBALANCE_URL", "https://basebalance.cloud")
-USDC_CONTRACT = "0x833589fCD6eDb6E08f4c7C32D4f71b54bDA02913"
+USDC_CONTRACT = "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913"
 ACTUAL_PAYEE = "0xe51e284b6Fbd870F43A2B112d40e48b34F8a7963"
 
 

@@ -33,7 +33,7 @@ Free tier: 10 requests/min per IP. Response headers tell you your state: `x-quot
 {"error":"402 payment required","challenge":{
   "amount": "0.50", "currency": "USDC", "network": 8453,
   "payTo": "0xe51e284b6Fbd870F43A2B112d40e48b34F8a7963",
-  "scheme": "USDC", "token": "0x833589fCD6eDb6E08f4c7C32D4f71b54bDA02913"}}
+  "scheme": "USDC", "token": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913"}}
 ```
 $0.50 USDC buys 10,000 requests (or 24h, whichever first).
 

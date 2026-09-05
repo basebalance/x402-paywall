@@ -20,7 +20,7 @@ import urllib.request
 import urllib.error
 
 URL = "https://basebalance.cloud/rpc"
-USDC = "0x833589fCD6eDb6E08f4c7C32D4f71b54bDA02913"  # Base USDC
+USDC = "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913"  # Base USDC
 UA = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126 Safari/537.36"
 
 

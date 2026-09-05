@@ -36,7 +36,7 @@ try:
 except ImportError:  # pragma: no cover
     requests = None  # type: ignore
 
-USDC_ADDRESS = "0x833589fCD6eDb6E08f4c7C32D4f71b54bDA02913"
+USDC_ADDRESS = "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913"
 BASE_CHAIN_ID = 8453
 DEFAULT_RPC = "https://mainnet.base.org"
 TX_SIG_RE = re.compile(r"^0x[a-fA-F0-9]{64}$")

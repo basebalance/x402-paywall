@@ -61,7 +61,8 @@ def main():
     gate = subprocess.Popen(
         [
             sys.executable, GATE,
-            "--backend", f"http://127.0.0.1:{BACKEND_PORT}",
+            "--upstream", f"http://127.0.0.1:{BACKEND_PORT}/",
+            "--payto", "0x0000000000000000000000000000000000000000",
             "--free-tier", str(FREE_TIER),
             "--port", str(GATE_PORT),
         ],

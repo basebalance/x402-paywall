@@ -1,3 +1,15 @@
+## Install as a library
+
+Any agent or script can install the client directly from GitHub:
+
+```bash
+pip install git+https://github.com/basebalance/x402-paywall
+python -c "import x402_client; print(x402_client.__file__)"
+```
+
+The module is zero-dependency (stdlib `urllib`/`hashlib` only) and works on
+Python 3.8+. For the interactive CLI and free-tier testing see `x402-client.py`.
+
 # x402-paywall — charge USDC for any JSON-RPC/HTTP API in one file
 
 Turn any upstream API into an x402 paywall: agents get N free requests/min/IP,

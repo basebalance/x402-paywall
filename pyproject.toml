@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "x402-client"
+version = "1.0.0"
+description = "Zero-dependency x402 USDC payment client for basebalance.cloud and any x402-compliant gateway"
+readme = "README.md"
+requires-python = ">=3.8"
+license = {text = "MIT"}
+keywords = ["x402", "usdc", "base", "paywall", "ethereum", "rpc", "402"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Topic :: Internet :: WWW/HTTP",
+]
+
+[project.urls]
+Homepage = "https://basebalance.cloud"
+Repository = "https://github.com/basebalance/x402-paywall"
+
+[tool.setuptools]
+py-modules = ["x402-client"]

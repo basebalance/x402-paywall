@@ -20,4 +20,4 @@ Homepage = "https://basebalance.cloud"
 Repository = "https://github.com/basebalance/x402-paywall"
 
 [tool.setuptools]
-py-modules = ["x402-client"]
+py-modules = ["x402_client"]
